@@ -10,8 +10,8 @@ on:
 env:
   # Change these values if you have forked it for your own works
   # Use Lowercase vaue of your Username
-  GITHUB_USERNAME: sanju0910
-  GITHUB_EMAIL: sreeshankar0910@gmail.com
+  GITHUB_USERNAME: Rinto02
+  GITHUB_EMAIL: rintokhan411@gmail.com
 
   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
