@@ -1,10 +1,6 @@
 name: Build & Push Docker Image
 
 on:
-  schedule:
-      # Run once per day
-    - cron: "0 */24 * * *"
-     
   workflow_dispatch:
    
 env:
