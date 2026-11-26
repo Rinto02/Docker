@@ -2,18 +2,15 @@ name: Build & Push Docker Image
 
 on:
   workflow_dispatch:
-   
+
 env:
-  # Change these values if you have forked it for your own works
-  # Use Lowercase vaue of your Username
-  GITHUB_USERNAME: Rinto02
-  GITHUB_EMAIL: rintokhan411@gmail.com
-
-  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
-  # Image name and tag. MUST be lowercase
+  GITHUB_USERNAME: rinto02        # must be lowercase
   IMAGE_NAME: ubuntu
   IMAGE_TAG: latest
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   push:
@@ -21,18 +18,19 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Configuring git
-        run: |
-          git config --global user.name $GITHUB_USERNAME
-          git config --global user.email $GITHUB_EMAIL
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ env.GITHUB_USERNAME }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Building the Image
+      - name: Build the image
         run: |
           docker build --no-cache -t ghcr.io/${GITHUB_USERNAME}/${IMAGE_NAME}:${IMAGE_TAG} .
-          echo "Build Completed Successfully!"
 
-      - name: Pushing the Image
+      - name: Push the image
         run: |
           docker push ghcr.io/${GITHUB_USERNAME}/${IMAGE_NAME}:${IMAGE_TAG}
